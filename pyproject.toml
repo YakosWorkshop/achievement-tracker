@@ -1,0 +1,20 @@
+[project]
+name = "achievement-tracker"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Jacob Viveros", email = "jv151721@gmail.com" }
+]
+requires-python = ">=3.14"
+dependencies = [
+    "pydantic>=2.13.5",
+    "sqlalchemy>=2.0.52",
+]
+
+[project.scripts]
+achievement-tracker = "achievement_tracker:main"
+
+[build-system]
+requires = ["uv_build>=0.12.5,<0.13.0"]
+build-backend = "uv_build"
