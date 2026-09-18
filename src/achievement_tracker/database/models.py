@@ -1,44 +1,40 @@
-from datetime import datetime
 
-from sqlalchemy import ForeignKey
-from sqlalchemy.orm import Mapped, mapped_column
-
-from achievement_tracker.database.base import Base
+from django.db import models
 
 
-class Games(Base):
-    __tablename__ = "games"
+class Game(models.Model):
+    title = models.CharField(max_length=1000)
+    is_completed = models.BooleanField()
     
-    id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str]
-    is_completed: Mapped[bool]
+    class Meta:
+        db_table =  "games"
+
+class Platform(models.Model):
+    title = models.CharField(max_length=1000, unique=True)
     
-class Achievements(Base):
-    __tablename__ = "achievements"
+    class Meta:
+            db_table =  "platforms"
+
+class GameSource(models.Model):
+    game = models.ForeignKey(Game, on_delete=models.CASCADE)
+    platforms = models.ForeignKey(Platform, on_delete=models.CASCADE)
+    external_id = models.CharField(max_length=1000)
+
+    class Meta:
+            db_table =  "game_sources"
+
+class Achievement(models.Model):
+    game_source = models.ForeignKey(GameSource, on_delete=models.CASCADE)
+    name = models.CharField(max_length=100)
+    description = models.TextField()
+    icon = models.ImageField()
     
-    id: Mapped[int] = mapped_column(primary_key=True)
-    game_source_id: Mapped[int] = mapped_column(ForeignKey("game_sources.id"))
-    name: Mapped[str]
-    description: Mapped[str]
-    icon: Mapped[str] = mapped_column(default=None)
-  
-class Platforms(Base):
-    __tablename__ = "platforms"
+    class Meta:
+            db_table =  "achievements"
+            
+class UserAchievement(models.Model):
+    achievements = models.ForeignKey(Achievement, on_delete=models.CASCADE)
+    time_unlocked = models.DateTimeField()
     
-    id: Mapped[int] = mapped_column(primary_key=True)
-    title: Mapped[str]
-        
-class GameSources(Base):
-    __tablename__ = "game_sources"
-    
-    id: Mapped[int] = mapped_column(primary_key=True)
-    game_id: Mapped[int] = mapped_column(ForeignKey("games.id"))
-    platform_id: Mapped[int] = mapped_column(ForeignKey("platforms.id"))
-    external_id: Mapped[str]
-    
-class UserAchievements(Base):
-    __tablename__ = "user_achievements"
-    
-    id: Mapped[int] = mapped_column(primary_key=True)
-    achievements_id: Mapped[int] = mapped_column(ForeignKey("achievements.id"))
-    time_unlocked: Mapped[datetime]
+    class Meta:
+            db_table =  "user_achievements"
