@@ -11,3 +11,8 @@ wheels/
 
 # Database
 data
+
+assets
+
+# Local provider credentials
+/config/providers.local.toml

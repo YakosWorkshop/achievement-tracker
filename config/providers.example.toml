@@ -1,0 +1,9 @@
+# Keep Steam IDs in quotes: they are identifiers, not numbers for calculation.
+# The local file stores credentials in plain text. Do not share it.
+# This template does not automatically load credentials into the application.
+
+[steam]
+# Obtain your key at https://steamcommunity.com/dev/apikey
+api_key = ""
+# Your 64-bit Steam ID (not your display name or profile URL).
+steam_id = ""
