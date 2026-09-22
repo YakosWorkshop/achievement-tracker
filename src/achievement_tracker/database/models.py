@@ -9,7 +9,7 @@ class Platform(models.Model):
 
 class Game(models.Model):
     external_id = models.CharField(max_length=1000)
-    platform_id = models.ForeignKey(Platform,on_delete=models.CASCADE)
+    platform = models.ForeignKey(Platform,on_delete=models.CASCADE)
     title = models.CharField(max_length=1000)
     detail = models.TextField()
     icon = models.ImageField()
@@ -25,7 +25,7 @@ class Game(models.Model):
         ]
 
 class Achievement(models.Model):
-    game_id = models.ForeignKey(Game, on_delete=models.CASCADE)
+    game = models.ForeignKey(Game, on_delete=models.CASCADE,related_name="achievements")
     name = models.CharField(max_length=100)
     description = models.TextField()
     icon = models.ImageField()
